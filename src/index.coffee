@@ -11,21 +11,25 @@ bodyParser = require("body-parser")
 app = express()
 
 # Define Port & Environment
-app.port = process.env.PORT or process.env.VMC_APP_PORT or 3000
+app.ip = process.env.OPENSHIFT_NODEJS_IP or "127.0.0.1"
+app.port = process.env.OPENSHIFT_NODEJS_PORT or process.env.VMC_APP_PORT or 3000
 env = process.env.NODE_ENV or "development"
 
 # Config module exports has `setEnvironment` function that sets app settings depending on environment.
 config = require "./config"
 config.setEnvironment env
 
-# db_config = "mongodb://#{config.DB_USER}:#{config.DB_PASS}@#{config.DB_HOST}:#{config.DB_PORT}/#{config.DB_NAME}"
-# mongoose.connect db_config
-if env != 'production'
-  mongoose.connect 'mongodb://localhost/example'
+if config?.DB_URI?
+  db_config = config.DB_URI
 else
-  console.log('If you are running in production, you may want to modify the mongoose connect path')
+  db_config = "mongodb://#{config.DB_USER}:#{config.DB_PASS}@#{config.DB_HOST}:#{config.DB_PORT}/#{config.DB_NAME}"
 
-#### View initialization 
+# if env != 'production'
+#   mongoose.connect 'mongodb://localhost/example'
+# else
+#   console.log('If you are running in production, you may want to modify the mongoose connect path')
+
+#### View initialization
 # Add Connect Assets.
 app.use assets()
 # Set the public folder as static assets.

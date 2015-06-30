@@ -4,7 +4,8 @@ var app, port;
 app = require('./.app');
 
 port = app.port;
+ip = app.port;
 
-app.listen(port, function() {
+app.listen(port, ip, function() {
   return console.log("Listening on " + port + "\nPress CTRL-C to stop server.");
 });

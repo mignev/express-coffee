@@ -69,5 +69,7 @@
     "Craig Ulliott <> (https://github.com/craigulliott)",
     "Shaun Kirk Wong <shaun.kirk.wong@gmail.com> (https://github.com/skw)",
     "Justin Collum <> (https://github.com/jcollum)"
-  ]
+  ],
+
+  "main": "server.js"
 }
